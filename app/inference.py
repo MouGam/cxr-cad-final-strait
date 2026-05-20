@@ -295,7 +295,7 @@ class InferenceEngine:
         # ─── 추론 (ONNX Runtime) ───
         infer_start = time.time()
 
-        probs, cam_arch, cam_fold = self._run_onnx_inference(
+        probs, cam_arch, cam_fold, component_probs = self._run_onnx_inference(
             clahe_img, model_choice, fold_choice, use_tta
         )
 
@@ -310,11 +310,18 @@ class InferenceEngine:
         _log(f"ONNX 추론 완료 — {model_label}{tta_label} ({inference_time_ms}ms)")
 
         # Per-disease Platt Scaling 적용 (calibration, ECE < 0.01 달성)
-        platt_arch = cam_arch if model_choice != "ensemble" else "densenet121"
-        platt = self._get_platt_params(platt_arch)
-        if platt is not None:
-            probs = _apply_platt(probs, platt)
-            _log("Platt Scaling 적용")
+        if model_choice == "ensemble" and component_probs:
+            calibrated = []
+            for arch, arch_probs in component_probs.items():
+                platt = self._get_platt_params(arch)
+                calibrated.append(_apply_platt(arch_probs, platt) if platt is not None else arch_probs)
+            probs = np.mean(calibrated, axis=0)
+            _log("Platt Scaling 적용 — 모델별 보정 후 앙상블 평균")
+        else:
+            platt = self._get_platt_params(cam_arch)
+            if platt is not None:
+                probs = _apply_platt(probs, platt)
+                _log("Platt Scaling 적용")
 
         # Ensemble에서 Grad-CAM 모델 선택
         if model_choice == "ensemble":
@@ -326,12 +333,13 @@ class InferenceEngine:
                 cam_fold = BEST_FOLDS["densenet121"]
 
         # Threshold
+        thresh_arch = "densenet121" if model_choice == "ensemble" else cam_arch
         if threshold_mode == "custom":
             thresholds = {d: threshold_value for d in DISEASE_LABELS}
         elif threshold_mode == "fixed":
             thresholds = {d: 0.5 for d in DISEASE_LABELS}
         else:
-            thresholds = self._get_thresholds(cam_arch)
+            thresholds = self._get_thresholds(thresh_arch)
 
         detected = self._apply_threshold(probs, thresholds)
         _log(f"Threshold 적용 — 탐지: {len(detected)}개 질환")
@@ -359,7 +367,6 @@ class InferenceEngine:
         top1_probability = float(probs[top1_idx])
 
         # Operating point thresholds (screening / confirmatory)
-        thresh_arch = cam_arch if model_choice != "ensemble" else "densenet121"
         screening_thresholds = _load_json_thresholds(thresh_arch, "screening_thresholds.json") or {}
         confirmatory_thresholds = _load_json_thresholds(thresh_arch, "confirmatory_thresholds.json") or {}
 
@@ -386,8 +393,8 @@ class InferenceEngine:
 
     def _run_onnx_inference(
         self, clahe_img: np.ndarray, model_choice: str, fold_choice: str, use_tta: bool,
-    ) -> tuple[np.ndarray, str, int]:
-        """ONNX Runtime 추론. (probs, cam_arch, cam_fold) 반환."""
+    ) -> tuple[np.ndarray, str, int, dict[str, np.ndarray] | None]:
+        """ONNX Runtime 추론. (probs, cam_arch, cam_fold, component_probs) 반환."""
 
         if model_choice == "ensemble":
             dn_fold = BEST_FOLDS["densenet121"]
@@ -399,7 +406,7 @@ class InferenceEngine:
             p_dn = fut_dn.result()
             p_eff = fut_eff.result()
             probs = (p_dn + p_eff) / 2.0
-            return probs, "densenet121", dn_fold
+            return probs, "densenet121", dn_fold, {"densenet121": p_dn, "efficientnet_b4": p_eff}
 
         arch = "densenet121" if model_choice == "densenet" else "efficientnet_b4"
         cfg = MODEL_CONFIGS[arch]
@@ -416,7 +423,7 @@ class InferenceEngine:
             fold = int(fold_choice)
             probs = self._predict_single(arch, fold, arr, use_tta)
 
-        return probs, arch, fold
+        return probs, arch, fold, None
 
     @property
     def models_available(self) -> dict[str, list[int]]:

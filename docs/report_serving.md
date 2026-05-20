@@ -56,6 +56,8 @@ Pydantic을 활용하여 입출력 스키마를 정의하였다 (`app/schemas.py
 | `gradcam_time_ms` | int | Grad-CAM 생성 시간 (ms) |
 | `log` | list[dict] | 처리 단계별 로그 (step, elapsed_ms) |
 
+`predictions`는 모델의 raw sigmoid 출력이 아니라 **Per-disease Platt Scaling**을 적용한 calibrated probability이다. Platt Scaling은 각 질환별로 `sigmoid(a * logit(p) + b)` 형태의 보정식을 학습하여, 예측 확률이 실제 양성 비율에 더 가깝게 해석되도록 만드는 calibration 후처리이다. Ensemble 서빙에서는 DenseNet과 EfficientNet의 확률을 각각 Platt 보정한 뒤 평균하여 최종 확률을 산출한다.
+
 ### 1.4 에러 처리
 
 잘못된 이미지 포맷에 대한 에러 메시지를 반환한다.
@@ -82,10 +84,12 @@ Pydantic을 활용하여 입출력 스키마를 정의하였다 (`app/schemas.py
 ONNX Runtime 추론 (병렬 실행, inference_time_ms 측정)
   +-- DenseNet: ONNX forward (+ H-Flip TTA)
   +-- EfficientNet: ONNX forward (+ H-Flip TTA)
-  +-- Ensemble: Soft Voting (확률 평균)
   |
   v
-Per-disease Platt Scaling (calibration)
+Per-disease Platt Scaling
+  +-- DenseNet: sigmoid(a_d * logit(p_d) + b_d)
+  +-- EfficientNet: sigmoid(a_e * logit(p_e) + b_e)
+  +-- Ensemble: 보정된 확률 평균
   |
   v
 Threshold 적용 -> 양성/음성 판정

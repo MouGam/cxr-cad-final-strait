@@ -109,7 +109,7 @@ python training/chestxray_train.py \
 | 2-Model Ensemble (5-fold) | - | **0.8520** | **0.2745** | 0.2346 |
 | Serving Best Pair (DenseNet f0 + B4 f3) | - | **0.8464** | - | 0.2331 |
 
-Per-disease Platt Scaling 적용 후 Ensemble ECE는 `0.2331 -> 0.0029`로 개선되어 ECE <= 0.10 기준을 충족합니다.
+Per-disease Platt Scaling 적용 후 Ensemble ECE는 `0.2331 -> 0.0029`로 개선되어 ECE <= 0.10 기준을 충족합니다. Platt Scaling은 모델의 raw probability를 질환별 로지스틱 보정식 `sigmoid(a * logit(p) + b)`에 통과시켜 실제 양성 비율에 가까운 calibrated probability로 바꾸는 후처리입니다. 서빙 앙상블에서는 DenseNet과 EfficientNet 출력을 각각 보정한 뒤 평균합니다.
 
 ## Focal Loss Gamma
 
