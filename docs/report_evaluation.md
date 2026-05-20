@@ -439,5 +439,6 @@ NIH ChestX-ray14와 CheXpert의 질환 라벨이 다르므로, 두 단계로 매
 - **학습 데이터셋**: NIH Chest X-ray 14 (111,979 images)
 - **테스트 분할**: 공식 test split 사용
 - **평가 지표**: AUROC (주), AUPRC (보조), ECE (calibration)
-- **하드웨어**: GPU 기반 추론
+- **오프라인 평가 하드웨어**: 학습/대량 평가용 GPU 환경
+- **서빙 벤치마크 하드웨어**: Apple M1 Pro MacBook Pro Docker CPU 환경 (`CPUExecutionProvider`)
 - **소프트웨어**: PyTorch, scikit-learn
