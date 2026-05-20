@@ -143,7 +143,7 @@ ImageNet 학습 데이터의 평균과 표준편차로 정규화하여, Pretrain
 
 ### 3.6 전처리 파이프라인 순서도
 
-![전처리 파이프라인](../report_assets/13_preprocessing_pipeline.png)
+![전처리 파이프라인](../report_assets/13_preprocessing_pipeline_v2.png)
 
 ---
 
@@ -199,7 +199,7 @@ mean < 50 이미지 89장 중 **82장이 소아**였으며, 이는 소아 X-ray 
 
 ### 4.5 최종 필터링 파이프라인
 
-![필터링 파이프라인](../report_assets/12_filter_pipeline_flow.png)
+![필터링 파이프라인](../report_assets/12_filter_pipeline_flow_v2.png)
 
 ---
 
