@@ -1,0 +1,314 @@
+{
+  "DenseNet 5-fold": {
+    "thresholds": {
+      "Atelectasis": 0.470324844121933,
+      "Cardiomegaly": 0.3988463580608368,
+      "Consolidation": 0.4476185739040375,
+      "Edema": 0.41430169343948364,
+      "Effusion": 0.4504857063293457,
+      "Emphysema": 0.373274564743042,
+      "Fibrosis": 0.46562647819519043,
+      "Hernia": 0.24229136109352112,
+      "Infiltration": 0.505831778049469,
+      "Mass": 0.45857125520706177,
+      "Nodule": 0.4599149227142334,
+      "Pleural_Thickening": 0.453725665807724,
+      "Pneumonia": 0.4963448643684387,
+      "Pneumothorax": 0.3359333872795105
+    },
+    "details": {
+      "Atelectasis": {
+        "threshold": 0.470324844121933,
+        "sensitivity": 0.7553122987765615,
+        "specificity": 0.7184189948105495,
+        "youden_j": 0.47373129358711097
+      },
+      "Cardiomegaly": {
+        "threshold": 0.3988463580608368,
+        "sensitivity": 0.8994413407821229,
+        "specificity": 0.7904599659284497,
+        "youden_j": 0.6899013067105726
+      },
+      "Consolidation": {
+        "threshold": 0.4476185739040375,
+        "sensitivity": 0.7760141093474426,
+        "specificity": 0.7215173055204942,
+        "youden_j": 0.4975314148679369
+      },
+      "Edema": {
+        "threshold": 0.41430169343948364,
+        "sensitivity": 0.847457627118644,
+        "specificity": 0.8118760195758564,
+        "youden_j": 0.6593336466945005
+      },
+      "Effusion": {
+        "threshold": 0.4504857063293457,
+        "sensitivity": 0.8716666666666667,
+        "specificity": 0.7609985528219971,
+        "youden_j": 0.6326652194886638
+      },
+      "Emphysema": {
+        "threshold": 0.373274564743042,
+        "sensitivity": 0.8559782608695652,
+        "specificity": 0.8910306845003934,
+        "youden_j": 0.7470089453699585
+      },
+      "Fibrosis": {
+        "threshold": 0.46562647819519043,
+        "sensitivity": 0.7594501718213058,
+        "specificity": 0.7751973383782373,
+        "youden_j": 0.5346475101995432
+      },
+      "Hernia": {
+        "threshold": 0.24229136109352112,
+        "sensitivity": 0.8723404255319149,
+        "specificity": 0.9558851858986708,
+        "youden_j": 0.8282256114305857
+      },
+      "Infiltration": {
+        "threshold": 0.505831778049469,
+        "sensitivity": 0.5348927875243664,
+        "specificity": 0.7522788203753351,
+        "youden_j": 0.28717160789970153
+      },
+      "Mass": {
+        "threshold": 0.45857125520706177,
+        "sensitivity": 0.7378640776699029,
+        "specificity": 0.829345769126791,
+        "youden_j": 0.567209846796694
+      },
+      "Nodule": {
+        "threshold": 0.4599149227142334,
+        "sensitivity": 0.6578073089700996,
+        "specificity": 0.7443772507983963,
+        "youden_j": 0.40218455976849604
+      },
+      "Pleural_Thickening": {
+        "threshold": 0.453725665807724,
+        "sensitivity": 0.7272727272727273,
+        "specificity": 0.7663662867744501,
+        "youden_j": 0.49363901404717736
+      },
+      "Pneumonia": {
+        "threshold": 0.4963448643684387,
+        "sensitivity": 0.6975308641975309,
+        "specificity": 0.7717686634752232,
+        "youden_j": 0.46929952767275407
+      },
+      "Pneumothorax": {
+        "threshold": 0.3359333872795105,
+        "sensitivity": 0.8081570996978852,
+        "specificity": 0.794624949859607,
+        "youden_j": 0.602782049557492
+      }
+    }
+  },
+  "EfficientNet-B4 5-fold": {
+    "thresholds": {
+      "Atelectasis": 0.44497331976890564,
+      "Cardiomegaly": 0.37979018688201904,
+      "Consolidation": 0.5693469047546387,
+      "Edema": 0.6631900072097778,
+      "Effusion": 0.5180832743644714,
+      "Emphysema": 0.3983730673789978,
+      "Fibrosis": 0.4425923824310303,
+      "Hernia": 0.2949214577674866,
+      "Infiltration": 0.5020980834960938,
+      "Mass": 0.46586495637893677,
+      "Nodule": 0.46548452973365784,
+      "Pleural_Thickening": 0.4992784559726715,
+      "Pneumonia": 0.511645495891571,
+      "Pneumothorax": 0.2903790771961212
+    },
+    "details": {
+      "Atelectasis": {
+        "threshold": 0.44497331976890564,
+        "sensitivity": 0.7920154539600772,
+        "specificity": 0.6907656216677329,
+        "youden_j": 0.4827810756278102
+      },
+      "Cardiomegaly": {
+        "threshold": 0.37979018688201904,
+        "sensitivity": 0.8631284916201117,
+        "specificity": 0.8016642641855589,
+        "youden_j": 0.6647927558056707
+      },
+      "Consolidation": {
+        "threshold": 0.5693469047546387,
+        "sensitivity": 0.7283950617283951,
+        "specificity": 0.7693483026639208,
+        "youden_j": 0.4977433643923159
+      },
+      "Edema": {
+        "threshold": 0.6631900072097778,
+        "sensitivity": 0.8067796610169492,
+        "specificity": 0.8731484502446982,
+        "youden_j": 0.6799281112616474
+      },
+      "Effusion": {
+        "threshold": 0.5180832743644714,
+        "sensitivity": 0.8216666666666667,
+        "specificity": 0.8039797395079595,
+        "youden_j": 0.6256464061746261
+      },
+      "Emphysema": {
+        "threshold": 0.3983730673789978,
+        "sensitivity": 0.8505434782608695,
+        "specificity": 0.8816548649357461,
+        "youden_j": 0.7321983431966157
+      },
+      "Fibrosis": {
+        "threshold": 0.4425923824310303,
+        "sensitivity": 0.8144329896907216,
+        "specificity": 0.7150499054080501,
+        "youden_j": 0.5294828950987718
+      },
+      "Hernia": {
+        "threshold": 0.2949214577674866,
+        "sensitivity": 0.851063829787234,
+        "specificity": 0.9513902266743723,
+        "youden_j": 0.8024540564616064
+      },
+      "Infiltration": {
+        "threshold": 0.5020980834960938,
+        "sensitivity": 0.5263157894736842,
+        "specificity": 0.7598621217924166,
+        "youden_j": 0.28617791126610087
+      },
+      "Mass": {
+        "threshold": 0.46586495637893677,
+        "sensitivity": 0.7172330097087378,
+        "specificity": 0.804271424709381,
+        "youden_j": 0.5215044344181188
+      },
+      "Nodule": {
+        "threshold": 0.46548452973365784,
+        "sensitivity": 0.6755260243632336,
+        "specificity": 0.7301080383230278,
+        "youden_j": 0.4056340626862614
+      },
+      "Pleural_Thickening": {
+        "threshold": 0.4992784559726715,
+        "sensitivity": 0.7367424242424242,
+        "specificity": 0.7611317254174397,
+        "youden_j": 0.4978741496598639
+      },
+      "Pneumonia": {
+        "threshold": 0.511645495891571,
+        "sensitivity": 0.7283950617283951,
+        "specificity": 0.7555311165739422,
+        "youden_j": 0.48392617830233736
+      },
+      "Pneumothorax": {
+        "threshold": 0.2903790771961212,
+        "sensitivity": 0.8308157099697885,
+        "specificity": 0.764340152426795,
+        "youden_j": 0.5951558623965836
+      }
+    }
+  },
+  "Ensemble (f0+f3)": {
+    "thresholds": {
+      "Atelectasis": 0.4376894235610962,
+      "Cardiomegaly": 0.3518291711807251,
+      "Consolidation": 0.48310503363609314,
+      "Edema": 0.386949747800827,
+      "Effusion": 0.45053398609161377,
+      "Emphysema": 0.3781340718269348,
+      "Fibrosis": 0.4260407090187073,
+      "Hernia": 0.2920008599758148,
+      "Infiltration": 0.4890441298484802,
+      "Mass": 0.4847940504550934,
+      "Nodule": 0.46161139011383057,
+      "Pleural_Thickening": 0.41288095712661743,
+      "Pneumonia": 0.5380990505218506,
+      "Pneumothorax": 0.4182877242565155
+    },
+    "details": {
+      "Atelectasis": {
+        "threshold": 0.4376894235610962,
+        "sensitivity": 0.7842884739214424,
+        "specificity": 0.7000071088362835,
+        "youden_j": 0.4842955827577259
+      },
+      "Cardiomegaly": {
+        "threshold": 0.3518291711807251,
+        "sensitivity": 0.9189944134078212,
+        "specificity": 0.7695583802909186,
+        "youden_j": 0.6885527936987398
+      },
+      "Consolidation": {
+        "threshold": 0.48310503363609314,
+        "sensitivity": 0.7513227513227513,
+        "specificity": 0.736929515711154,
+        "youden_j": 0.48825226703390523
+      },
+      "Edema": {
+        "threshold": 0.386949747800827,
+        "sensitivity": 0.8677966101694915,
+        "specificity": 0.8119412724306688,
+        "youden_j": 0.6797378826001603
+      },
+      "Effusion": {
+        "threshold": 0.45053398609161377,
+        "sensitivity": 0.8733333333333333,
+        "specificity": 0.7589001447178003,
+        "youden_j": 0.6322334780511336
+      },
+      "Emphysema": {
+        "threshold": 0.3781340718269348,
+        "sensitivity": 0.8804347826086957,
+        "specificity": 0.8710333071072647,
+        "youden_j": 0.7514680897159602
+      },
+      "Fibrosis": {
+        "threshold": 0.4260407090187073,
+        "sensitivity": 0.7766323024054983,
+        "specificity": 0.7450583860656272,
+        "youden_j": 0.5216906884711255
+      },
+      "Hernia": {
+        "threshold": 0.2920008599758148,
+        "sensitivity": 0.8936170212765957,
+        "specificity": 0.9599306492005394,
+        "youden_j": 0.8535476704771351
+      },
+      "Infiltration": {
+        "threshold": 0.4890441298484802,
+        "sensitivity": 0.5489278752436647,
+        "specificity": 0.7406357717349674,
+        "youden_j": 0.2895636469786321
+      },
+      "Mass": {
+        "threshold": 0.4847940504550934,
+        "sensitivity": 0.7354368932038835,
+        "specificity": 0.8113679372803461,
+        "youden_j": 0.5468048304842296
+      },
+      "Nodule": {
+        "threshold": 0.46161139011383057,
+        "sensitivity": 0.6710963455149501,
+        "specificity": 0.7391452062240946,
+        "youden_j": 0.4102415517390447
+      },
+      "Pleural_Thickening": {
+        "threshold": 0.41288095712661743,
+        "sensitivity": 0.7916666666666666,
+        "specificity": 0.7164060429366552,
+        "youden_j": 0.5080727096033217
+      },
+      "Pneumonia": {
+        "threshold": 0.5380990505218506,
+        "sensitivity": 0.6481481481481481,
+        "specificity": 0.8092249967654289,
+        "youden_j": 0.45737314491357706
+      },
+      "Pneumothorax": {
+        "threshold": 0.4182877242565155,
+        "sensitivity": 0.7537764350453172,
+        "specificity": 0.8393501805054151,
+        "youden_j": 0.5931266155507324
+      }
+    }
+  }
+}

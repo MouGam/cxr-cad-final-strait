@@ -1,0 +1,30 @@
+FROM pytorch/pytorch:2.3.1-cuda12.1-cudnn9-runtime
+
+WORKDIR /app
+
+# 시스템 패키지
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libgl1-mesa-glx libglib2.0-0 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Python 패키지
+COPY requirements-train.txt .
+RUN pip install --no-cache-dir -r requirements-train.txt
+
+# 소스 복사
+COPY training/ training/
+
+# 데이터는 볼륨 마운트로 연결
+VOLUME ["/app/data", "/app/outputs"]
+
+ENTRYPOINT ["python", "training/chestxray_train.py"]
+CMD ["--train_csv", "/app/data/train.csv", \
+     "--test_csv", "/app/data/test.csv", \
+     "--image_dir", "/app/data/images", \
+     "--output_dir", "/app/outputs", \
+     "--gammas", "0", "1", "2", \
+     "--epochs", "50", \
+     "--batch_size", "32", \
+     "--num_folds", "5", \
+     "--workers", "4", \
+     "--patience", "5"]

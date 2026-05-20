@@ -1,0 +1,154 @@
+{
+  "false_positives": [
+    {
+      "rank": 1,
+      "filename": "00018444_001.png",
+      "disease": "Atelectasis",
+      "probability": 0.9681710004806519,
+      "threshold": 0.470324844121933,
+      "cam_outside_ratio": 0.14184241359109548,
+      "gradcam_file": "fp_1_Atelectasis_00018444_001.png"
+    },
+    {
+      "rank": 2,
+      "filename": "00021811_002.png",
+      "disease": "Atelectasis",
+      "probability": 0.9617600440979004,
+      "threshold": 0.470324844121933,
+      "cam_outside_ratio": 0.15271966527196654,
+      "gradcam_file": "fp_2_Atelectasis_00021811_002.png"
+    },
+    {
+      "rank": 3,
+      "filename": "00013516_000.png",
+      "disease": "Atelectasis",
+      "probability": 0.9612571001052856,
+      "threshold": 0.470324844121933,
+      "cam_outside_ratio": 0.007539874335427743,
+      "gradcam_file": "fp_3_Atelectasis_00013516_000.png"
+    },
+    {
+      "rank": 4,
+      "filename": "00000211_027.png",
+      "disease": "Cardiomegaly",
+      "probability": 0.9959576725959778,
+      "threshold": 0.3988463580608368,
+      "cam_outside_ratio": 0.0,
+      "gradcam_file": "fp_4_Cardiomegaly_00000211_027.png"
+    },
+    {
+      "rank": 5,
+      "filename": "00000211_030.png",
+      "disease": "Cardiomegaly",
+      "probability": 0.9959298372268677,
+      "threshold": 0.3988463580608368,
+      "cam_outside_ratio": 0.0,
+      "gradcam_file": "fp_5_Cardiomegaly_00000211_030.png"
+    }
+  ],
+  "false_negatives": [
+    {
+      "rank": 1,
+      "filename": "00003049_000.png",
+      "disease": "Atelectasis",
+      "probability": 0.022167442366480827,
+      "threshold": 0.470324844121933,
+      "cam_outside_ratio": 1.0,
+      "gradcam_file": "fn_1_Atelectasis_00003049_000.png"
+    },
+    {
+      "rank": 2,
+      "filename": "00028044_002.png",
+      "disease": "Atelectasis",
+      "probability": 0.03232233598828316,
+      "threshold": 0.470324844121933,
+      "cam_outside_ratio": 0.5480795423590302,
+      "gradcam_file": "fn_2_Atelectasis_00028044_002.png"
+    },
+    {
+      "rank": 3,
+      "filename": "00001836_049.png",
+      "disease": "Atelectasis",
+      "probability": 0.03237208351492882,
+      "threshold": 0.470324844121933,
+      "cam_outside_ratio": 0.6786995989022588,
+      "gradcam_file": "fn_3_Atelectasis_00001836_049.png"
+    },
+    {
+      "rank": 4,
+      "filename": "00017110_022.png",
+      "disease": "Cardiomegaly",
+      "probability": 0.0023852833546698093,
+      "threshold": 0.3988463580608368,
+      "cam_outside_ratio": 1.0,
+      "gradcam_file": "fn_4_Cardiomegaly_00017110_022.png"
+    },
+    {
+      "rank": 5,
+      "filename": "00026236_013.png",
+      "disease": "Cardiomegaly",
+      "probability": 0.004334771074354649,
+      "threshold": 0.3988463580608368,
+      "cam_outside_ratio": 1.0,
+      "gradcam_file": "fn_5_Cardiomegaly_00026236_013.png"
+    }
+  ],
+  "outside_lung": [
+    {
+      "rank": 1,
+      "filename": "00000211_010.png",
+      "disease": "Infiltration",
+      "probability": 0.593839168548584,
+      "cam_outside_ratio": 1.0,
+      "gradcam_file": "outside_1_Infiltration_00000211_010.png"
+    },
+    {
+      "rank": 2,
+      "filename": "00000211_014.png",
+      "disease": "Infiltration",
+      "probability": 0.6530039310455322,
+      "cam_outside_ratio": 1.0,
+      "gradcam_file": "outside_2_Infiltration_00000211_014.png"
+    },
+    {
+      "rank": 3,
+      "filename": "00000211_015.png",
+      "disease": "Infiltration",
+      "probability": 0.6957820653915405,
+      "cam_outside_ratio": 1.0,
+      "gradcam_file": "outside_3_Infiltration_00000211_015.png"
+    },
+    {
+      "rank": 4,
+      "filename": "00000211_016.png",
+      "disease": "Infiltration",
+      "probability": 0.789150059223175,
+      "cam_outside_ratio": 1.0,
+      "gradcam_file": "outside_4_Infiltration_00000211_016.png"
+    },
+    {
+      "rank": 5,
+      "filename": "00000211_017.png",
+      "disease": "Infiltration",
+      "probability": 0.8165390491485596,
+      "cam_outside_ratio": 1.0,
+      "gradcam_file": "outside_5_Infiltration_00000211_017.png"
+    }
+  ],
+  "thresholds_used": {
+    "Atelectasis": 0.470324844121933,
+    "Cardiomegaly": 0.3988463580608368,
+    "Consolidation": 0.4476185739040375,
+    "Edema": 0.41430169343948364,
+    "Effusion": 0.4504857063293457,
+    "Emphysema": 0.373274564743042,
+    "Fibrosis": 0.46562647819519043,
+    "Hernia": 0.24229136109352112,
+    "Infiltration": 0.505831778049469,
+    "Mass": 0.45857125520706177,
+    "Nodule": 0.4599149227142334,
+    "Pleural_Thickening": 0.453725665807724,
+    "Pneumonia": 0.4963448643684387,
+    "Pneumothorax": 0.3359333872795105
+  }
+}

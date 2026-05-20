@@ -1,0 +1,146 @@
+{
+  "youden": {
+    "Atelectasis": {
+      "threshold": 0.09329972416162491,
+      "sensitivity": 0.7804249839021249,
+      "specificity": 0.7019975829956636,
+      "youden_j": 0.4824225668977885
+    },
+    "Cardiomegaly": {
+      "threshold": 0.011988846585154533,
+      "sensitivity": 0.9134078212290503,
+      "specificity": 0.7639234700563491,
+      "youden_j": 0.6773312912853994
+    },
+    "Consolidation": {
+      "threshold": 0.030951490625739098,
+      "sensitivity": 0.8324514991181657,
+      "specificity": 0.6600013286388096,
+      "youden_j": 0.4924528277569753
+    },
+    "Edema": {
+      "threshold": 0.008001316338777542,
+      "sensitivity": 0.8677966101694915,
+      "specificity": 0.8088091353996737,
+      "youden_j": 0.6766057455691652
+    },
+    "Effusion": {
+      "threshold": 0.11201111972332001,
+      "sensitivity": 0.855,
+      "specificity": 0.7782199710564399,
+      "youden_j": 0.6332199710564399
+    },
+    "Emphysema": {
+      "threshold": 0.016227200627326965,
+      "sensitivity": 0.8804347826086957,
+      "specificity": 0.8726724364017834,
+      "youden_j": 0.7531072190104791
+    },
+    "Fibrosis": {
+      "threshold": 0.013766458258032799,
+      "sensitivity": 0.7663230240549829,
+      "specificity": 0.7720007828299302,
+      "youden_j": 0.5383238068849131
+    },
+    "Hernia": {
+      "threshold": 0.00039536942495033145,
+      "sensitivity": 0.9148936170212766,
+      "specificity": 0.9400886149104218,
+      "youden_j": 0.8549822319316984
+    },
+    "Infiltration": {
+      "threshold": 0.17594361305236816,
+      "sensitivity": 0.5559454191033139,
+      "specificity": 0.7338950593642283,
+      "youden_j": 0.28984047846754213
+    },
+    "Mass": {
+      "threshold": 0.04139414429664612,
+      "sensitivity": 0.7512135922330098,
+      "specificity": 0.7921059745877264,
+      "youden_j": 0.5433195668207362
+    },
+    "Nodule": {
+      "threshold": 0.056234586983919144,
+      "sensitivity": 0.6511627906976745,
+      "specificity": 0.7562003125637018,
+      "youden_j": 0.4073631032613763
+    },
+    "Pleural_Thickening": {
+      "threshold": 0.026202969253063202,
+      "sensitivity": 0.7935606060606061,
+      "specificity": 0.7138881526636629,
+      "youden_j": 0.5074487587242689
+    },
+    "Pneumonia": {
+      "threshold": 0.01553746871650219,
+      "sensitivity": 0.6419753086419753,
+      "specificity": 0.8131711735023937,
+      "youden_j": 0.45514648214436887
+    },
+    "Pneumothorax": {
+      "threshold": 0.04798588156700134,
+      "sensitivity": 0.7628398791540786,
+      "specificity": 0.8311940098943709,
+      "youden_j": 0.5940338890484494
+    }
+  },
+  "operating_points": {
+    "Atelectasis": {
+      "sens_at_spec90": 0.4565357372826787,
+      "spec_at_sens90": 0.5298215682092842
+    },
+    "Cardiomegaly": {
+      "sens_at_spec90": 0.7178770949720671,
+      "spec_at_sens90": 0.7708688245315162
+    },
+    "Consolidation": {
+      "sens_at_spec90": 0.4444444444444444,
+      "spec_at_sens90": 0.5297947253039261
+    },
+    "Edema": {
+      "sens_at_spec90": 0.7220338983050848,
+      "spec_at_sens90": 0.7586949429037521
+    },
+    "Effusion": {
+      "sens_at_spec90": 0.67,
+      "spec_at_sens90": 0.7162083936324168
+    },
+    "Emphysema": {
+      "sens_at_spec90": 0.8342391304347826,
+      "spec_at_sens90": 0.8271702071859428
+    },
+    "Fibrosis": {
+      "sens_at_spec90": 0.5257731958762887,
+      "spec_at_sens90": 0.5044686541848784
+    },
+    "Hernia": {
+      "sens_at_spec90": 0.9361702127659575,
+      "spec_at_sens90": 0.9400886149104218
+    },
+    "Infiltration": {
+      "sens_at_spec90": 0.3064327485380117,
+      "spec_at_sens90": 0.29329758713136733
+    },
+    "Mass": {
+      "sens_at_spec90": 0.6322815533980582,
+      "spec_at_sens90": 0.5696809948634767
+    },
+    "Nodule": {
+      "sens_at_spec90": 0.45182724252491696,
+      "spec_at_sens90": 0.33797648977373107
+    },
+    "Pleural_Thickening": {
+      "sens_at_spec90": 0.4734848484848485,
+      "spec_at_sens90": 0.5510204081632653
+    },
+    "Pneumonia": {
+      "sens_at_spec90": 0.48148148148148145,
+      "spec_at_sens90": 0.3471988614309742
+    },
+    "Pneumothorax": {
+      "sens_at_spec90": 0.6419939577039275,
+      "spec_at_sens90": 0.6247492980344966
+    }
+  }
+}

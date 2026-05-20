@@ -1,0 +1,37 @@
+# OS / editor
+.DS_Store
+.env
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+*.log
+
+# Raw / processed datasets
+data/
+nih-dataset/
+shifted_domain_dataset/
+by_hand/
+quality_filter_result/
+
+# Model weights and generated serving model directory
+models/
+
+# Training and evaluation bulk artifacts
+outputs/**/*.npy
+outputs/test_metadata.csv
+outputs/tensorboard/
+outputs_mini/
+outputs_effb0/
+outputs_effb4/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+*.tar.gz
+
+# Presentation/source-only local files
+*.pptx

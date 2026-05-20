@@ -1,0 +1,176 @@
+{
+  "DenseNet 5-fold": {
+    "Atelectasis": {
+      "sens_at_spec90": 0.45524790727623954,
+      "spec_at_sens90": 0.5289685078552642
+    },
+    "Cardiomegaly": {
+      "sens_at_spec90": 0.7150837988826816,
+      "spec_at_sens90": 0.7821386450006552
+    },
+    "Consolidation": {
+      "sens_at_spec90": 0.47266313932980597,
+      "spec_at_sens90": 0.5135853318275427
+    },
+    "Edema": {
+      "sens_at_spec90": 0.7186440677966102,
+      "spec_at_sens90": 0.7425122349102773
+    },
+    "Effusion": {
+      "sens_at_spec90": 0.6738888888888889,
+      "spec_at_sens90": 0.7173661360347323
+    },
+    "Emphysema": {
+      "sens_at_spec90": 0.845108695652174,
+      "spec_at_sens90": 0.8212693417256753
+    },
+    "Fibrosis": {
+      "sens_at_spec90": 0.5326460481099656,
+      "spec_at_sens90": 0.5246917607149847
+    },
+    "Hernia": {
+      "sens_at_spec90": 0.8936170212765957,
+      "spec_at_sens90": 0.8311821742759905
+    },
+    "Infiltration": {
+      "sens_at_spec90": 0.3087719298245614,
+      "spec_at_sens90": 0.3018000765990042
+    },
+    "Mass": {
+      "sens_at_spec90": 0.6468446601941747,
+      "spec_at_sens90": 0.5890781292241146
+    },
+    "Nodule": {
+      "sens_at_spec90": 0.4629014396456257,
+      "spec_at_sens90": 0.354759801589998
+    },
+    "Pleural_Thickening": {
+      "sens_at_spec90": 0.5151515151515151,
+      "spec_at_sens90": 0.5112642459581236
+    },
+    "Pneumonia": {
+      "sens_at_spec90": 0.48148148148148145,
+      "spec_at_sens90": 0.38368482339241816
+    },
+    "Pneumothorax": {
+      "sens_at_spec90": 0.6404833836858006,
+      "spec_at_sens90": 0.6059633640861077
+    }
+  },
+  "EfficientNet-B4 5-fold": {
+    "Atelectasis": {
+      "sens_at_spec90": 0.46555054732775275,
+      "spec_at_sens90": 0.5327361910855193
+    },
+    "Cardiomegaly": {
+      "sens_at_spec90": 0.6927374301675978,
+      "spec_at_sens90": 0.7563884156729132
+    },
+    "Consolidation": {
+      "sens_at_spec90": 0.4444444444444444,
+      "spec_at_sens90": 0.5172390885537766
+    },
+    "Edema": {
+      "sens_at_spec90": 0.7016949152542373,
+      "spec_at_sens90": 0.7700489396411093
+    },
+    "Effusion": {
+      "sens_at_spec90": 0.65,
+      "spec_at_sens90": 0.691534008683068
+    },
+    "Emphysema": {
+      "sens_at_spec90": 0.8097826086956522,
+      "spec_at_sens90": 0.7902570154733806
+    },
+    "Fibrosis": {
+      "sens_at_spec90": 0.5463917525773195,
+      "spec_at_sens90": 0.52403940243982
+    },
+    "Hernia": {
+      "sens_at_spec90": 0.8723404255319149,
+      "spec_at_sens90": 0.8611057599691774
+    },
+    "Infiltration": {
+      "sens_at_spec90": 0.30721247563352827,
+      "spec_at_sens90": 0.2735350440444274
+    },
+    "Mass": {
+      "sens_at_spec90": 0.5885922330097088,
+      "spec_at_sens90": 0.5330494728304948
+    },
+    "Nodule": {
+      "sens_at_spec90": 0.4186046511627907,
+      "spec_at_sens90": 0.35054698647822247
+    },
+    "Pleural_Thickening": {
+      "sens_at_spec90": 0.4943181818181818,
+      "spec_at_sens90": 0.5192154783991518
+    },
+    "Pneumonia": {
+      "sens_at_spec90": 0.49382716049382713,
+      "spec_at_sens90": 0.46590762064950186
+    },
+    "Pneumothorax": {
+      "sens_at_spec90": 0.6389728096676737,
+      "spec_at_sens90": 0.6293622141997594
+    }
+  },
+  "Ensemble (f0+f3)": {
+    "Atelectasis": {
+      "sens_at_spec90": 0.45460399227301995,
+      "spec_at_sens90": 0.5265515035188739
+    },
+    "Cardiomegaly": {
+      "sens_at_spec90": 0.7094972067039106,
+      "spec_at_sens90": 0.7799108897916394
+    },
+    "Consolidation": {
+      "sens_at_spec90": 0.4567901234567901,
+      "spec_at_sens90": 0.5307912044110809
+    },
+    "Edema": {
+      "sens_at_spec90": 0.7016949152542373,
+      "spec_at_sens90": 0.7732463295269167
+    },
+    "Effusion": {
+      "sens_at_spec90": 0.6677777777777778,
+      "spec_at_sens90": 0.7158465991316931
+    },
+    "Emphysema": {
+      "sens_at_spec90": 0.8369565217391305,
+      "spec_at_sens90": 0.8284815106215578
+    },
+    "Fibrosis": {
+      "sens_at_spec90": 0.5532646048109966,
+      "spec_at_sens90": 0.491421488681584
+    },
+    "Hernia": {
+      "sens_at_spec90": 0.9361702127659575,
+      "spec_at_sens90": 0.9309060553522122
+    },
+    "Infiltration": {
+      "sens_at_spec90": 0.3048732943469786,
+      "spec_at_sens90": 0.2907698199923401
+    },
+    "Mass": {
+      "sens_at_spec90": 0.6286407766990292,
+      "spec_at_sens90": 0.5678561773452284
+    },
+    "Nodule": {
+      "sens_at_spec90": 0.4540420819490587,
+      "spec_at_sens90": 0.3400828973296188
+    },
+    "Pleural_Thickening": {
+      "sens_at_spec90": 0.49053030303030304,
+      "spec_at_sens90": 0.5486350384309568
+    },
+    "Pneumonia": {
+      "sens_at_spec90": 0.48148148148148145,
+      "spec_at_sens90": 0.3570966489843447
+    },
+    "Pneumothorax": {
+      "sens_at_spec90": 0.6389728096676737,
+      "spec_at_sens90": 0.6000133707714935
+    }
+  }
+}

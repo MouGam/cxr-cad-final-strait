@@ -1,0 +1,24 @@
+.git
+.DS_Store
+__pycache__/
+*.pyc
+.pytest_cache/
+data/
+nih-dataset/
+shifted_domain_dataset/
+outputs/**/*.npy
+outputs/tensorboard/
+docs/
+report_assets/
+analysis/
+tests/
+
+# Keep only serving best-pair model files in Docker context.
+models/densenet121/fold1*
+models/densenet121/fold2*
+models/densenet121/fold3*
+models/densenet121/fold4*
+models/efficientnet_b4/fold0*
+models/efficientnet_b4/fold1*
+models/efficientnet_b4/fold2*
+models/efficientnet_b4/fold4*

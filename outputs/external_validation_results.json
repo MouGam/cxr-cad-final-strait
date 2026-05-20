@@ -1,0 +1,84 @@
+{
+  "dataset": "CheXpert (VisualCheXbert labels)",
+  "num_images": 10000,
+  "direct_mapping": {
+    "Atelectasis": {
+      "chexpert_label": "Atelectasis",
+      "nih_auroc": 0.8098,
+      "chexpert_auroc": 0.8146051950290585,
+      "chexpert_auprc": 0.7296481762739275,
+      "gap": 0.004805195029058518
+    },
+    "Cardiomegaly": {
+      "chexpert_label": "Cardiomegaly",
+      "nih_auroc": 0.9167,
+      "chexpert_auroc": 0.7434311994207863,
+      "chexpert_auprc": 0.6307550614275175,
+      "gap": -0.17326880057921368
+    },
+    "Consolidation": {
+      "chexpert_label": "Consolidation",
+      "nih_auroc": 0.8097,
+      "chexpert_auroc": 0.8651617567637425,
+      "chexpert_auprc": 0.756377861765176,
+      "gap": 0.05546175676374254
+    },
+    "Edema": {
+      "chexpert_label": "Edema",
+      "nih_auroc": 0.9026,
+      "chexpert_auroc": 0.8109648467820497,
+      "chexpert_auprc": 0.6525927874557291,
+      "gap": -0.09163515321795024
+    },
+    "Effusion": {
+      "chexpert_label": "Pleural Effusion",
+      "nih_auroc": 0.891,
+      "chexpert_auroc": 0.8894500246141622,
+      "chexpert_auprc": 0.8027799786882039,
+      "gap": -0.0015499753858377874
+    },
+    "Pneumonia": {
+      "chexpert_label": "Pneumonia",
+      "nih_auroc": 0.79,
+      "chexpert_auroc": 0.6637830251182125,
+      "chexpert_auprc": 0.33341887043181967,
+      "gap": -0.1262169748817875
+    },
+    "Pneumothorax": {
+      "chexpert_label": "Pneumothorax",
+      "nih_auroc": 0.868,
+      "chexpert_auroc": 0.8207381661493763,
+      "chexpert_auprc": 0.4153401845661624,
+      "gap": -0.04726183385062366
+    }
+  },
+  "approximate_mapping": {
+    "Infiltration": {
+      "chexpert_label": "Lung Opacity",
+      "nih_auroc": 0.6979,
+      "chexpert_auroc": 0.8500903586111532,
+      "chexpert_auprc": 0.8801035074308001,
+      "gap": 0.15219035861115326,
+      "mapping_type": "approximate"
+    },
+    "Mass": {
+      "chexpert_label": "Lung Lesion",
+      "nih_auroc": 0.8605,
+      "chexpert_auroc": 0.6822424736378913,
+      "chexpert_auprc": 0.2644067805257728,
+      "gap": -0.1782575263621088,
+      "mapping_type": "approximate"
+    },
+    "Pleural_Thickening": {
+      "chexpert_label": "Pleural Other",
+      "nih_auroc": 0.8211,
+      "chexpert_auroc": 0.7070831747425774,
+      "chexpert_auprc": 0.30554799242274416,
+      "gap": -0.11401682525742263,
+      "mapping_type": "approximate"
+    }
+  },
+  "direct_mean_nih_auroc": 0.8554000000000002,
+  "direct_mean_chexpert_auroc": 0.8011620305539127,
+  "direct_mean_gap": -0.0542379694460875
+}

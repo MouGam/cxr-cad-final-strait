@@ -1,0 +1,11 @@
+{
+  "DenseNet 5-fold TTA": {
+    "ece": 0.23034926376857295
+  },
+  "EfficientNet-B4 5-fold TTA": {
+    "ece": 0.23700911603032085
+  },
+  "Ensemble (f0+f3) TTA": {
+    "ece": 0.23313100488529526
+  }
+}

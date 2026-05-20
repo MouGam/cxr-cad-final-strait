@@ -1,0 +1,31 @@
+======================================================================
+pydicom DICOM 메타데이터 파싱 결과
+======================================================================
+샘플: pydicom 내장 CT 테스트 파일
+
+[주요 메타데이터]
+  Patient Name                  : CompressedSamples^CT1
+  Patient ID                    : 1CT1
+  Patient Birth Date            : 
+  Patient Sex                   : O
+  Patient Age                   : 000Y
+  Study Date                    : 20040119
+  Modality                      : CT
+  Rows                          : 128
+  Columns                       : 128
+  Bits Allocated                : 16
+  Pixel Spacing                 : [0.661468, 0.661468]
+  Institution Name              : JFK IMAGING CENTER
+  Referring Physician Name      : 
+
+[PHI (개인식별정보) 필드 확인]
+  PatientName                   : CompressedSamples^CT1  ← 제거 대상 (환자 이름)
+  PatientID                     : 1CT1  ← 제거 대상 (환자 ID)
+  PatientBirthDate              :   ← 제거 대상 (생년월일)
+  InstitutionName               : JFK IMAGING CENTER  ← 제거 대상 (기관명)
+  ReferringPhysicianName        :   ← 제거 대상 (의뢰 의사)
+
+[이미지 데이터]
+  Pixel Array Shape: (128, 128)
+  Pixel Array Dtype: int16
+  Min/Max: 128 / 2191
