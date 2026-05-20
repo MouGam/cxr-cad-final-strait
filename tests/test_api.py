@@ -269,10 +269,25 @@ class TestConfig:
         assert MODEL_CONFIGS["densenet121"]["input_size"] == 224
         assert MODEL_CONFIGS["efficientnet_b4"]["input_size"] == 380
 
-    def test_risk_thresholds_ordering(self):
-        """위험도 색상 경계값 순서 검증 (YELLOW < RED)."""
-        from app.config import RED_THRESHOLD, YELLOW_THRESHOLD
-        assert YELLOW_THRESHOLD < RED_THRESHOLD
+    def test_operating_point_threshold_files_exist(self):
+        """서빙용 operating point threshold 파일 존재 여부 검증."""
+        from pathlib import Path
+
+        from app.config import DISEASE_LABELS
+
+        for arch in ("densenet121", "efficientnet_b4"):
+            base = Path("model_assets") / arch
+            for filename in (
+                "thresholds.json",
+                "screening_thresholds.json",
+                "confirmatory_thresholds.json",
+                "platt_params.json",
+            ):
+                path = base / filename
+                assert path.exists(), f"{path} missing"
+
+                data = json.loads(path.read_text())
+                assert set(data) == set(DISEASE_LABELS)
 
     def test_imagenet_normalization_constants(self):
         """ImageNet 정규화 상수 검증."""

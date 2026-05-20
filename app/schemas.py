@@ -28,7 +28,7 @@ class HealthResponse(BaseModel):
 
 class PredictResponse(BaseModel):
     predictions: dict[str, float] = Field(
-        description="14개 질환별 예측 확률 (0.0 ~ 1.0)"
+        description="14개 질환별 calibrated probability (Per-disease Platt Scaling 적용, 0.0 ~ 1.0)"
     )
     thresholds: dict[str, float] = Field(
         description="적용된 질환별 threshold 값 (Youden's J)"
@@ -70,7 +70,9 @@ class PredictResponse(BaseModel):
                 "Pneumonia": 0.045,
                 "Pneumothorax": 0.034,
             },
-            "thresholds": {"Atelectasis": 0.5, "Cardiomegaly": 0.5},
+            "thresholds": {"Atelectasis": 0.0962, "Cardiomegaly": 0.0118},
+            "screening_thresholds": {"Atelectasis": 0.0537, "Cardiomegaly": 0.0127},
+            "confirmatory_thresholds": {"Atelectasis": 0.2174, "Cardiomegaly": 0.0382},
             "detected": ["Cardiomegaly", "Effusion"],
             "gradcam_base64": {"Cardiomegaly": "iVBORw0KGgo...", "Effusion": "iVBORw0KGgo..."},
             "inference_time_ms": 312,

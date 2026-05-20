@@ -50,18 +50,24 @@ def check_api_status() -> tuple[bool, str]:
 
 
 def get_risk_color(prob: float, youden_t: float, screen_t: float | None, confirm_t: float | None) -> str:
-    """요구사항 기준 위험도 색상: 빨강 >=0.5, 노랑 0.3~0.5, 초록 <0.3."""
-    if prob >= 0.5:
+    """Operating point 기준 색상: confirm 이상 높음, screening 이상 주의."""
+    low_t = screen_t if screen_t is not None else youden_t
+    high_t = confirm_t if confirm_t is not None else youden_t
+    low_t, high_t = sorted((low_t, high_t))
+    if prob >= high_t:
         return "🔴"
-    if prob >= 0.3:
+    if prob >= low_t:
         return "🟡"
     return "🟢"
 
 
 def get_bar_hex(prob: float, youden_t: float, screen_t: float | None, confirm_t: float | None) -> str:
-    if prob >= 0.5:
+    low_t = screen_t if screen_t is not None else youden_t
+    high_t = confirm_t if confirm_t is not None else youden_t
+    low_t, high_t = sorted((low_t, high_t))
+    if prob >= high_t:
         return "#FF4B4B"
-    if prob >= 0.3:
+    if prob >= low_t:
         return "#FFA500"
     return "#21C354"
 
@@ -253,14 +259,14 @@ def main():
         st.markdown("*확률은 Per-disease Platt Scaling 적용 (calibrated)*")
         st.markdown("---")
         st.markdown(
-            "**색상 기준 (요구사항 고정)**\n"
-            "- 🔴 높음: prob >= 0.5\n"
-            "- 🟡 주의: 0.3 <= prob < 0.5\n"
-            "- 🟢 낮음: prob < 0.3\n\n"
+            "**색상 기준 (Operating Point)**\n"
+            "- 🔴 높음: Confirmatory 이상\n"
+            "- 🟡 주의: Screening 이상, Confirmatory 미만\n"
+            "- 🟢 낮음: Screening 미만\n\n"
             "**막대 위 마커**\n"
-            "- ■ 검정 = Youden's J (균형점)\n"
-            "- ■ 파랑 = 스크리닝 (Sens>=90%)\n"
-            "- ■ 빨강 = 확진보조 (Spec>=90%)"
+            "- ■ 검정 = Youden's J (탐지 기준)\n"
+            "- ■ 파랑 = Screening (Sens>=90%)\n"
+            "- ■ 빨강 = Confirmatory (Spec>=90%)"
         )
 
     # 이미지 업로드 (다중)

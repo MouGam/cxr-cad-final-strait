@@ -163,7 +163,8 @@ Streamlit 대시보드는 모델 파일을 직접 로드하지 않고 FastAPI와
 - PNG/JPEG 다중 업로드
 - 원본 X-ray와 Grad-CAM 오버레이
 - 14개 질환 수평 막대 그래프
-- 위험도 색상: 빨강 >=0.5, 노랑 0.3~0.5, 초록 <0.3
+- Per-disease Platt Scaling 적용 calibrated probability 표시
+- 위험도 색상: Screening/Confirmatory operating point 기준
 - Youden/Screening/Confirmatory threshold marker 표시
 
 ## Tests

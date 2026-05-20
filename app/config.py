@@ -89,16 +89,9 @@ DEMO_CONFIG = {
 # ─────────────────────────────────────────────
 # Threshold 설정
 # ─────────────────────────────────────────────
-# TODO: Youden's J 계산 후 아래 값을 업데이트하거나 models/{arch}/thresholds.json 파일 추가
-# thresholds.json 파일이 있으면 이 값 대신 파일에서 로드됨 (inference.py 참조)
-# 0.5는 의료 영상 이진분류의 표준 기본값
+# 기본 서빙은 models/{arch}/thresholds.json의 Youden's J threshold를 사용한다.
+# 아래 값은 threshold JSON이 없을 때만 쓰는 안전 fallback이다.
 DEFAULT_THRESHOLDS = {disease: 0.5 for disease in DISEASE_LABELS}
-
-# ─────────────────────────────────────────────
-# 위험도 색상 경계 (요구사항 확정)
-# ─────────────────────────────────────────────
-RED_THRESHOLD = 0.5    # 빨강: 0.5 이상
-YELLOW_THRESHOLD = 0.3  # 노랑: 0.3 ~ 0.5, 초록: 0.3 미만
 
 # ─────────────────────────────────────────────
 # 전처리 설정 (reference/preprocess.py 기준)
