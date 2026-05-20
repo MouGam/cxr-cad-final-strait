@@ -50,7 +50,27 @@ bash start.sh
 
 ### 2. Docker
 
-모델 파일은 GitHub에 직접 올리지 않습니다. Docker build 전에 모델을 준비합니다.
+Docker Hub에 모델 파일이 포함된 제출용 이미지를 업로드해 두었습니다. 별도 모델 다운로드 없이 바로 실행할 수 있습니다.
+
+```bash
+docker pull mougam/cxr-cad-final:latest
+docker run --rm -p 8000:8000 -p 8501:8501 mougam/cxr-cad-final:latest
+```
+
+고정 재현용 태그는 최종 Git 커밋 해시 기준입니다.
+
+```bash
+docker pull mougam/cxr-cad-final:c5e22b1
+docker run --rm -p 8000:8000 -p 8501:8501 mougam/cxr-cad-final:c5e22b1
+```
+
+실행 후 접속:
+
+- Dashboard: `http://localhost:8501`
+- API: `http://localhost:8000`
+- Swagger: `http://localhost:8000/docs`
+
+로컬에서 직접 이미지를 빌드할 수도 있습니다. 이 경우 모델 파일은 GitHub에 직접 올리지 않으므로 Docker build 전에 모델을 준비합니다.
 
 ```bash
 pip install -r requirements.txt
