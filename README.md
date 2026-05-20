@@ -6,14 +6,12 @@ NIH ChestX-ray14 기반 14개 흉부 질환 Multi-label Classification, Grad-CAM
 
 ## 팀원별 기여
 
-| 이름 | 주요 기여 |
-|------|-----------|
-| 팀원 1 | 데이터 전처리, 품질 필터링, CLAHE/EDA |
-| 팀원 2 | DenseNet/EfficientNet 학습, Focal Loss, 5-Fold CV |
-| 팀원 3 | 평가, Calibration, Subgroup/External Validation, XAI 분석 |
-| 팀원 4 | FastAPI 서빙, Streamlit 대시보드, Docker/테스트 |
+팀명은 **팀 스트레이트**이며, kickoff 회의에서 프로젝트 관리, 전처리, 학습, 서빙, 문서화 역할을 분담하였다. 주 1회 대면 회의에서 진행 범위, 남은 작업, 주간 할당량, 문제 상황을 점검하고 Git 기반으로 산출물을 통합하였다.
 
-제출 전 실제 팀원 이름과 기여 내용으로 갱신하세요.
+| 이름 | 학번 | 역할 | 주요 기여 |
+|------|------|------|-----------|
+| 전민혁 | 20201634 | 팀장, 프로젝트 매니징, 프론트엔드, 전처리 | 프로젝트 차터 및 일정 관리, NIH ChestX-ray14 전처리 전략 수립, 품질 필터링/수동 crop 의사결정, CLAHE 및 데이터셋 구성, Streamlit 판독 보조 대시보드, 전처리/서빙 관련 보고서 정리 |
+| 김찬영 | 20211528 | 발표, 모델 학습, 백엔드, Docker | DenseNet/EfficientNet 전이학습, Focal Loss 및 5-Fold CV 실험, 앙상블/Calibration/Operating Point 평가, FastAPI 추론 서버, Docker 기반 실행 환경, 테스트 및 모델 학습 보고서 정리 |
 
 ## Repository Structure
 
