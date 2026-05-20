@@ -201,6 +201,18 @@ pytest -q
 32 passed
 ```
 
+## MLOps Environment
+
+최종 제출물은 재현 가능한 실행/검증 환경을 포함합니다.
+
+- Docker Hub 이미지: `mougam/cxr-cad-final`
+- Docker 기반 FastAPI + Streamlit 서빙
+- `/health` API를 통한 서버 및 모델 로드 상태 확인
+- Streamlit과 FastAPI 역할 분리 (대시보드는 API 통신만 수행)
+- `app/config.py`와 `model_assets/*.json` 기반 설정/threshold/calibration 관리
+- `pytest` 기반 전처리, label, API schema, 모델 구조 테스트
+- 대용량 모델/데이터 파일은 Git에서 제외하고 Docker image 또는 외부 저장소로 관리
+
 ## Large Files
 
 GitHub에는 다음 파일을 직접 커밋하지 않습니다.
