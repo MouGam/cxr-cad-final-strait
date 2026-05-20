@@ -191,3 +191,11 @@ GitHub에는 다음 파일을 직접 커밋하지 않습니다.
 - TensorBoard logs
 
 가중치와 데이터셋은 HuggingFace 또는 별도 저장소에서 내려받아 재현합니다.
+
+## Project History
+
+이 저장소는 캡스톤 진행 중 분리되어 있던 전처리/학습 repo와 서빙 showcase repo를 최종 제출용으로 통합 정리한 버전입니다.
+
+- Training / preprocessing 원본: `https://github.com/MouGam/capstone-chest-xray-multilabel`
+- Serving showcase 원본: `https://github.com/MouGam/capstone-chest-xray-multilabel-showcase`
+- Final submission repo: `https://github.com/MouGam/cxr-cad-final-strait`

@@ -1,4 +1,6 @@
-# 기능요구사항 2항: 모델 학습 보고서
+# 모델 학습 보고서
+
+> 기능요구사항 2항: DenseNet-121 기반 Multi-label Classification 학습, Focal Loss 직접 구현, gamma 실험, 5-Fold GroupKFold 및 모델 선택 근거 정리.
 
 ## 목차
 
