@@ -152,6 +152,7 @@ Per-disease Platt Scaling 적용 후 Ensemble ECE는 `0.2331 -> 0.0029`로 개�
 
 상세 내용:
 
+- [프로젝트 최종 보고서](docs/project_final_report.md)
 - [전처리 보고서](docs/preprocessing_report.md)
 - [모델 학습 보고서](docs/report_model_training.md)
 - [평가 보고서](docs/report_evaluation.md)
