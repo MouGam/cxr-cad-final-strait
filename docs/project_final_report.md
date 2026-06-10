@@ -247,6 +247,7 @@ AI 도구는 코드 작성, 디버깅, 설계 논의, 문서화 속도를 높이
 | 개선 사항 | 이유 | 다음 수행 방향 |
 |-----------|------|----------------|
 | 복구 이미지 ablation study | 수동 처리 후 포함한 31장이 성능과 subgroup 성능에 미친 영향을 인과적으로 확인하지 못함 | 동일 seed, 동일 split, 동일 모델 설정에서 복구 이미지 포함/미포함 비교 |
+| CLAHE 적용 전후 AUROC 비교 | CLAHE 적용 전후 시인성 및 히스토그램 변화는 문서화했지만, 동일 조건에서 CLAHE 미적용 baseline과 CLAHE 적용 모델의 AUROC 수치 차이는 별도로 측정하지 못함 | 동일 split, seed, 모델 구조, hyperparameter에서 no-CLAHE vs CLAHE 학습을 수행하고 Mean AUROC 및 질환별 AUROC 차이 산출 |
 | Issue/PR 기반 작업 관리 보완 | 최종 repo 통합은 수행했지만 GitHub Issue와 PR을 적극적으로 활용하지 못함 | 기능 단위 Issue 생성, PR 리뷰, 요구사항 traceability 유지 |
 | AI 활용 개발 관리 체계화 | AI 활용으로 생산성은 높아졌지만 규모가 커질수록 구조 관리가 중요해짐 | DDD로 도메인 경계 정리, ADR로 결정 기록, Issue/PR로 작업 단위 관리 |
 | 대시보드 UI 개선 | Streamlit 대시보드는 기능 요구사항은 충족했지만, 제출용 판독 보조 화면으로는 정보 위계와 사용 흐름을 더 다듬을 여지가 있음 | threshold marker, Grad-CAM loading 상태, 다중 이미지 비교, 결과 요약/내보내기, 시각적 강조 규칙을 정리 |
