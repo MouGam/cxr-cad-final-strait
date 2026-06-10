@@ -9,14 +9,15 @@
 | 항목 | 결과 |
 |------|------|
 | 데이터셋 | NIH ChestX-ray14 원본 112,120장 중 최종 111,979장 사용 |
-| 품질 필터링 | 141장 제거, 31장 수동 crop 후 포함 |
+| 품질 필터링 | 141장 제거, 31장 수동 처리 후 포함(30장 crop, 1장 CLAHE-only) |
 | 최종 학습 성능 | 2-Model 5-Fold Ensemble AUROC 0.8520 |
+| 서빙 모델 성능 | DenseNet fold 0 + EfficientNet-B4 fold 3 Best Pair AUROC 0.8464 |
 | Calibration | Ensemble ECE 0.2331에서 Per-disease Platt Scaling 후 0.0029 |
 | External Validation | CheXpert 10,000장 직접 매핑 7개 질환 평균 AUROC 0.8012 |
 | 서빙 성능 | Apple M1 Pro CPU Docker 환경에서 Ensemble+TTA 약 470ms |
 | 테스트 | pytest 32개 통과 |
 
-프로젝트의 핵심 특징은 단순한 모델 학습을 넘어 의료 영상 AI에 필요한 신뢰성 검토를 함께 수행했다는 점이다. 소아 및 희귀질환 표본 손실을 줄이기 위해 과도하게 검거나 밝은 이미지를 일괄 제거하지 않고, crop 후 기준을 만족하는 일부 이미지를 복구하였다. 또한 Temperature Scaling으로는 ECE 기준을 만족하기 어려운 것을 확인하고, 질환별 Platt Scaling을 적용하여 calibrated probability를 서빙 결과에 반영하였다. 모델 성능 외에도 Subgroup Analysis, External Validation, Grad-CAM 기반 FP/FN 분석, Docker 기반 CPU 서빙 최적화를 수행하였다.
+프로젝트의 핵심 특징은 단순한 모델 학습을 넘어 의료 영상 AI에 필요한 신뢰성 검토를 함께 수행했다는 점이다. 소아 및 희귀질환 표본 손실을 줄이기 위해 과도하게 검거나 밝은 이미지를 일괄 제거하지 않고, 수동 crop 또는 CLAHE 재처리 후 기준을 만족하는 일부 이미지를 복구하였다. 또한 Temperature Scaling으로는 ECE 기준을 만족하기 어려운 것을 확인하고, 질환별 Platt Scaling을 적용하여 calibrated probability를 서빙 결과에 반영하였다. 모델 성능 외에도 Subgroup Analysis, External Validation, Grad-CAM 기반 FP/FN 분석, Docker 기반 CPU 서빙 최적화를 수행하였다.
 
 프로젝트 수행 과정에서는 AI 도구를 코드 작성, 방향 논의, 문서 정리, 검토에 폭넓게 활용하였다. 다만 프로젝트 규모가 커질수록 AI 활용 자체보다 작업을 어떻게 분해하고 통제할지가 중요하다는 점을 확인하였다. 향후에는 DDD, ADR, Issue/PR 기반 작업 분해를 도입하여 AI를 활용하더라도 프로젝트 의도와 구조가 흔들리지 않도록 관리할 필요가 있다.
 
@@ -33,7 +34,7 @@
 | 평가 | AUROC/AUPRC, calibration, operating point, subgroup, external validation, error analysis 수행 |
 | 설명 가능성 | Grad-CAM으로 FP/FN 및 폐 영역 이탈 케이스 분석 |
 | 서빙 | FastAPI `/health`, `/predict`와 Streamlit 대시보드 구현 |
-| MLOps | Dockerfile, Docker Hub 이미지, 설정/모델 산출물 분리, pytest 기반 검증 환경 구축 |
+| MLOps | Dockerfile, Docker Hub 이미지, HuggingFace 모델/데이터셋 저장소, 설정/모델 산출물 분리, pytest 기반 검증 환경 구축 |
 
 의료 영상 AI에서는 AUROC와 같은 분류 성능뿐 아니라 예측 확률의 해석 가능성, 임계값 선택 근거, 도메인 전이 상황에서의 성능 저하, 집단별 성능 차이, 모델이 실제 병변 영역을 보는지에 대한 검토가 중요하다. 따라서 본 프로젝트는 모델 학습 결과만 제출하지 않고, calibration, operating point, subgroup analysis, external validation, Grad-CAM error analysis, CPU 기반 서빙 환경까지 하나의 최종 산출물로 통합하였다.
 
@@ -61,15 +62,17 @@ AI 도구는 코드 작성, 오류 해결, 방향 논의, 문서 초안 작성, 
 
 | 산출물 | 평가 |
 |--------|------|
-| 데이터 전처리 파이프라인 | DICOM/PNG 입력 가정, CLAHE, 품질 필터링, 수동 crop 복구, multi-hot encoding, patient-wise split 문서화 완료 |
+| 데이터 전처리 파이프라인 | DICOM/PNG 입력 가정, CLAHE, 품질 필터링, 수동 처리 이미지 복구, multi-hot encoding, patient-wise split 문서화 완료 |
 | 모델 학습 파이프라인 | DenseNet-121, EfficientNet-B0/B4, Focal Loss gamma 실험, 5-Fold GroupKFold, ensemble 결과 정리 |
 | 성능 평가 | AUROC/AUPRC, TTA, ensemble, Youden's J, screening/confirmatory operating point, calibration 분석 완료 |
 | 공정성/외부 검증 | 성별/연령/View Position subgroup analysis, CheXpert external validation 및 domain shift 원인 분석 완료 |
 | XAI/Error | FP 5건, FN 5건, 폐 영역 이탈 5건 Grad-CAM 분석 및 shortcut learning 가능성 검토 완료 |
 | API/대시보드 | FastAPI `/health`, `/predict`, Swagger UI, Streamlit 판독 보조 화면 구현 |
-| MLOps 환경 | Dockerfile, Docker Hub image, 설정/모델 파일 분리, pytest 32개, CPU 기반 실행 환경 제공 |
+| MLOps 환경 | Dockerfile, Docker Hub image, HuggingFace 모델/데이터셋 저장소, 설정/모델 파일 분리, pytest 32개, CPU 기반 실행 환경 제공 |
 
 최종 모델의 2-Model 5-Fold Ensemble AUROC는 0.8520으로 요구 기준인 Mean AUROC 0.80 이상을 충족하였다. 서빙 환경에서는 전체 5-fold 모델을 모두 로드하지 않고 DenseNet fold 0과 EfficientNet-B4 fold 3의 best pair를 사용하여 성능과 지연시간 사이의 균형을 맞추었다. 해당 구성의 Test AUROC는 0.8464이며, Apple M1 Pro CPU Docker 환경에서 Ensemble+TTA 추론 시간이 약 470ms로 측정되어 500ms 요구사항을 만족하였다.
+
+학습 완료 모델 가중치는 GitHub에 직접 포함하지 않고 HuggingFace 모델 저장소로 분리하였다. DenseNet-121, EfficientNet-B0, EfficientNet-B4 가중치를 각각 별도 저장소로 관리하고, 최종 Docker image에는 서빙에 필요한 best pair 모델만 포함하였다. 전처리 완료 NIH 데이터셋은 정규화 직전 단계까지 처리한 이미지로 HuggingFace Dataset에 저장하되, 원본 데이터셋의 배포 관례를 존중하여 요청 기반 접근으로 운영한다. Domain Shift 검증에 사용한 CheXpert 선별 테스트셋도 별도 HuggingFace Dataset으로 관리한다.
 
 ### 3.3 프로젝트 범위
 
@@ -77,7 +80,7 @@ AI 도구는 코드 작성, 오류 해결, 방향 논의, 문서 초안 작성, 
 
 | 포함 범위 | 내용 |
 |-----------|------|
-| 데이터 전처리 | NIH ChestX-ray14 이미지 품질 분석, 필터링, crop 복구, CLAHE, resize, normalization |
+| 데이터 전처리 | NIH ChestX-ray14 이미지 품질 분석, 필터링, 수동 처리 이미지 복구, CLAHE, resize, normalization |
 | 라벨 처리 | 14개 질환 multi-hot encoding, No Finding 제외 방식 정리 |
 | 학습 | DenseNet/EfficientNet 전이학습, Focal Loss gamma 실험, pos_weight, AMP 고려 |
 | 검증 | 5-Fold GroupKFold, patient-wise split, TTA, ensemble |
@@ -102,8 +105,8 @@ AI 도구는 코드 작성, 오류 해결, 방향 논의, 문서 초안 작성, 
 
 | 품질 기준 | 적용 내용 |
 |-----------|-----------|
-| 데이터 품질 | mean/std 기반 이상 이미지 탐지, 수동 crop 후 기준 재검토, 최종 111,979장 사용 |
-| 대표성 보존 | mean < 50 이미지 중 소아 표본이 다수임을 확인하고 31장 복구 |
+| 데이터 품질 | mean/std 기반 이상 이미지 탐지, 수동 처리 후 기준 재검토, 최종 111,979장 사용 |
+| 대표성 보존 | mean < 50 이미지 중 소아 표본이 다수임을 확인하고 31장 수동 처리 후 복구 |
 | 개인정보 보호 | DICOM PHI는 공개 repo에 포함하지 않고, 보고서에는 비식별 통계와 예시 중심으로 기록 |
 | 데이터 분할 | 동일 환자가 train/test에 동시에 포함되지 않도록 patient-wise split 및 GroupKFold 적용 |
 | 모델 성능 | Mean AUROC 0.80 이상 기준 적용 |
@@ -117,25 +120,25 @@ AI 도구는 코드 작성, 오류 해결, 방향 논의, 문서 초안 작성, 
 
 | 요구사항 | 수행 결과 | 판정 | 근거 |
 |----------|-----------|------|------|
-| NIH ChestX-ray14 112,120장 활용 | 원본 112,120장 분석 후 최종 111,979장 사용 | 충족 | [전처리 보고서](preprocessing_report.md) |
-| DICOM/이미지 전처리 | DICOM 메타데이터 처리 원칙, PNG 전처리, CLAHE, resize, normalization 정리 | 충족 | [전처리 보고서](preprocessing_report.md), [Dataset Card](dataset_card.md) |
-| 품질 필터링 | 141장 제거, 31장 crop 복구 | 충족 | [전처리 보고서](preprocessing_report.md) |
-| Multi-label Classification | 14개 질환 multi-hot label 기반 학습 | 충족 | [모델 학습 보고서](report_model_training.md) |
-| Focal Loss | gamma 0/1/2 실험 및 최종 gamma=0 선택 | 충족 | [모델 학습 보고서](report_model_training.md) |
-| 5-Fold CV | Patient ID 기준 GroupKFold 수행 | 충족 | [모델 학습 보고서](report_model_training.md) |
-| Model Ensemble | DenseNet/EfficientNet 5-fold ensemble, AUROC 0.8520 | 충족 | [평가 보고서](report_evaluation.md) |
-| TTA | H-Flip TTA 적용 및 주의사항 문서화 | 충족 | [평가 보고서](report_evaluation.md) |
-| Calibration | Temperature Scaling 한계 확인 후 Per-disease Platt Scaling 적용, ECE 0.0029 | 충족 | [평가 보고서](report_evaluation.md) |
-| Operating Point | Youden's J, Sens@Spec90, Spec@Sens90 산출 | 충족 | [평가 보고서](report_evaluation.md) |
-| Subgroup Analysis | 성별/연령/View Position 분석, 모두 AUROC 차이 10% 미만 | 충족 | [평가 보고서](report_evaluation.md) |
-| External Validation | CheXpert 10,000장 직접 매핑 7개 질환 평가, 평균 AUROC 0.8012 | 충족 | [평가 보고서](report_evaluation.md) |
-| Grad-CAM | 마지막 convolution layer 기반 Grad-CAM 구현 | 충족 | [XAI 및 에러 분석](report_xai_error.md) |
-| FP/FN 에러 분석 | FP 5건, FN 5건, 폐 영역 이탈 5건 분석 | 충족 | [XAI 및 에러 분석](report_xai_error.md) |
-| FastAPI API | `/health`, `/predict`, Swagger UI 제공 | 충족 | [서빙/MLOps 보고서](report_serving.md) |
-| Streamlit Dashboard | 이미지 업로드, 확률 막대 그래프, Grad-CAM overlay, threshold marker 제공 | 충족 | [서빙/MLOps 보고서](report_serving.md) |
-| 추론 500ms | Apple M1 Pro CPU Docker 기준 Ensemble+TTA 약 470ms | 충족 | [서빙/MLOps 보고서](report_serving.md) |
-| Docker 실행 환경 | Dockerfile 및 Docker Hub image 제공 | 충족 | [README](../README.md), [서빙/MLOps 보고서](report_serving.md) |
-| pytest 3개 이상 | pytest 32개 통과 | 충족 | [서빙/MLOps 보고서](report_serving.md) |
+| NIH ChestX-ray14 112,120장 활용 | 원본 112,120장 분석 후 최종 111,979장 사용 | 충족 | [전처리 보고서](https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/preprocessing_report.md) |
+| DICOM/이미지 전처리 | DICOM 메타데이터 처리 원칙, PNG 전처리, CLAHE, resize, normalization 정리 | 충족 | [전처리 보고서](https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/preprocessing_report.md), [Dataset Card](https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/dataset_card.md) |
+| 품질 필터링 | 141장 제거, 31장 수동 처리 복구(30장 crop, 1장 CLAHE-only) | 충족 | [전처리 보고서](https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/preprocessing_report.md) |
+| Multi-label Classification | 14개 질환 multi-hot label 기반 학습 | 충족 | [모델 학습 보고서](https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/report_model_training.md) |
+| Focal Loss | gamma 0/1/2 실험 및 최종 gamma=0 선택 | 충족 | [모델 학습 보고서](https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/report_model_training.md) |
+| 5-Fold CV | Patient ID 기준 GroupKFold 수행 | 충족 | [모델 학습 보고서](https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/report_model_training.md) |
+| Model Ensemble | DenseNet/EfficientNet 5-fold ensemble AUROC 0.8520, 서빙 best pair AUROC 0.8464 | 충족 | [평가 보고서](https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/report_evaluation.md) |
+| TTA | H-Flip TTA 적용 및 주의사항 문서화 | 충족 | [평가 보고서](https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/report_evaluation.md) |
+| Calibration | Temperature Scaling 한계 확인 후 Per-disease Platt Scaling 적용, ECE 0.0029 | 충족 | [평가 보고서](https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/report_evaluation.md) |
+| Operating Point | Youden's J, Sens@Spec90, Spec@Sens90 산출 | 충족 | [평가 보고서](https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/report_evaluation.md) |
+| Subgroup Analysis | 성별/연령/View Position 분석, 모두 AUROC 차이 10% 미만 | 충족 | [평가 보고서](https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/report_evaluation.md) |
+| External Validation | CheXpert 10,000장 직접 매핑 7개 질환 평가, 평균 AUROC 0.8012 | 충족 | [평가 보고서](https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/report_evaluation.md), [CheXpert 선별 테스트셋](https://huggingface.co/datasets/MouGam/chexpert-test-set) |
+| Grad-CAM | 마지막 convolution layer 기반 Grad-CAM 구현 | 충족 | [XAI 및 에러 분석](https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/report_xai_error.md) |
+| FP/FN 에러 분석 | FP 5건, FN 5건, 폐 영역 이탈 5건 분석 | 충족 | [XAI 및 에러 분석](https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/report_xai_error.md) |
+| FastAPI API | `/health`, `/predict`, Swagger UI 제공 | 충족 | [서빙/MLOps 보고서](https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/report_serving.md) |
+| Streamlit Dashboard | 이미지 업로드, 확률 막대 그래프, Grad-CAM overlay, threshold marker 제공 | 충족 | [서빙/MLOps 보고서](https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/report_serving.md) |
+| 추론 500ms | Apple M1 Pro CPU Docker 기준 Ensemble+TTA 약 470ms | 충족 | [서빙/MLOps 보고서](https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/report_serving.md) |
+| Docker 실행 환경 | Dockerfile 및 Docker Hub image 제공 | 충족 | [README](https://github.com/MouGam/cxr-cad-final-strait/blob/main/README.md), [서빙/MLOps 보고서](https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/report_serving.md), [Docker Hub](https://hub.docker.com/r/mougam/cxr-cad-final) |
+| pytest 3개 이상 | pytest 32개 통과 | 충족 | [서빙/MLOps 보고서](https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/report_serving.md) |
 | GitHub Issue/PR 적극 활용 | 최종 repo 통합은 Git 기반으로 수행했으나 Issue/PR 활용은 부족 | 보완 필요 | 향후 개선사항으로 기록 |
 
 ### 3.4 프로젝트 일정
@@ -160,7 +163,7 @@ AI 도구는 코드 작성, 오류 해결, 방향 논의, 문서 초안 작성, 
 
 | 항목 | 원인 | 대처 |
 |------|------|------|
-| 품질 필터링 기준 | 어두운 이미지에 소아 표본이 많이 포함되어 단순 제거 시 대표성 손실 가능 | 수동 crop 후 기준 만족 이미지 31장 포함 |
+| 품질 필터링 기준 | 어두운 이미지에 소아 표본이 많이 포함되어 단순 제거 시 대표성 손실 가능 | 30장 crop 및 1장 CLAHE-only 재처리로 총 31장 포함 |
 | Calibration 기준 | 단일 Temperature Scaling으로 ECE가 0.10 이하로 내려가지 않음 | 질환별 Platt Scaling 적용 |
 | 서빙 지연시간 | PyTorch 기반 앙상블과 Grad-CAM을 함께 처리하면 500ms 초과 가능 | ONNX Runtime CPU 추론, warm-up, 병렬 추론, Grad-CAM 별도 측정 적용 |
 | 최종 통합 | 전처리/학습 repo와 서빙 repo가 분리되어 있었음 | final repo를 별도로 구성하고 문서/코드/산출물을 통합 |
@@ -181,7 +184,7 @@ AI 도구는 코드 작성, 오류 해결, 방향 논의, 문서 초안 작성, 
 
 #### 3.5.2 비용 문제 원인 및 대처 활동
 
-금전 비용 문제는 발생하지 않았다. 다만 대용량 의료 영상 데이터와 모델 가중치로 인해 저장공간과 로컬 학습 시간이 실질적인 제약이었다. 이를 위해 GitHub에는 원본 데이터, 전처리 이미지, `.pth`, `.onnx` 등 대용량 파일을 직접 포함하지 않고, Docker image 또는 외부 저장소를 통해 재현성을 확보하였다.
+금전 비용 문제는 발생하지 않았다. 다만 대용량 의료 영상 데이터와 모델 가중치로 인해 저장공간과 로컬 학습 시간이 실질적인 제약이었다. 이를 위해 GitHub에는 원본 데이터, 전처리 이미지, `.pth`, `.onnx` 등 대용량 파일을 직접 포함하지 않고, Docker image, HuggingFace 모델 저장소, HuggingFace Dataset 저장소를 통해 재현성을 확보하였다.
 
 ### 3.6 프로젝트 인력
 
@@ -192,7 +195,7 @@ AI 도구는 코드 작성, 오류 해결, 방향 논의, 문서 초안 작성, 
 | 역할 영역 | 수행 내용 |
 |-----------|-----------|
 | 프로젝트 관리 | 요구사항 정리, 최종 제출 구조 설계, 일정/산출물 점검 |
-| 전처리/데이터 | 품질 필터링, crop 복구, CLAHE, dataset split, preprocessing report |
+| 전처리/데이터 | 품질 필터링, 수동 처리 이미지 복구, CLAHE, dataset split, preprocessing report |
 | 모델 학습/평가 | DenseNet/EfficientNet, Focal Loss, 5-Fold CV, ensemble, calibration, evaluation report |
 | 서빙/대시보드 | FastAPI, Streamlit, ONNX 추론, Grad-CAM, Docker |
 | 문서화/검토 | README, 기능별 기술 리포트, 최종 보고서, 요구사항 대비 검토 |
@@ -209,7 +212,7 @@ AI 도구는 코드 작성, 오류 해결, 방향 논의, 문서 초안 작성, 
 
 이미지 품질 기준을 기계적으로 적용하면 평균 밝기나 대비가 낮은 이미지를 쉽게 제거할 수 있다. 그러나 본 프로젝트에서는 mean < 50 이미지 89장 중 82장이 소아 이미지였고, 일부 조합에서는 희귀질환 표본이 사라질 수 있음을 확인하였다. 따라서 의료 데이터 전처리에서는 품질 기준뿐 아니라 어떤 환자군과 질환 조합이 제거되는지를 함께 확인해야 한다.
 
-본 프로젝트에서는 31장을 수동 crop 후 포함하여 minority sample 대표성 손실을 줄이고자 했다. 다만 이 조치가 실제 성능 향상에 어느 정도 영향을 주었는지는 동일 조건 ablation study를 수행하지 못했으므로 단정할 수 없다.
+본 프로젝트에서는 총 31장을 수동 처리 후 포함하여 minority sample 대표성 손실을 줄이고자 했다. 실제 파일 기준으로는 `by_hand/cropped`에 crop 처리된 30장이 존재하고, 저대비 이미지 1장은 crop 없이 CLAHE 재처리 대상으로 포함되어 `by_hand/final` 및 `by_hand/clahe` 기준 31장이 관리된다. 다만 이 조치가 실제 성능 향상에 어느 정도 영향을 주었는지는 동일 조건 ablation study를 수행하지 못했으므로 단정할 수 없다.
 
 ### 4.2 Calibration은 의료 AI에서 필수적인 품질 기준이다
 
@@ -235,7 +238,7 @@ AI 도구는 코드 작성, 디버깅, 설계 논의, 문서화 속도를 높이
 
 | 개선 사항 | 이유 | 다음 수행 방향 |
 |-----------|------|----------------|
-| 복구 이미지 ablation study | crop 후 포함한 31장이 성능과 subgroup 성능에 미친 영향을 인과적으로 확인하지 못함 | 동일 seed, 동일 split, 동일 모델 설정에서 복구 이미지 포함/미포함 비교 |
+| 복구 이미지 ablation study | 수동 처리 후 포함한 31장이 성능과 subgroup 성능에 미친 영향을 인과적으로 확인하지 못함 | 동일 seed, 동일 split, 동일 모델 설정에서 복구 이미지 포함/미포함 비교 |
 | Issue/PR 기반 작업 관리 보완 | 최종 repo 통합은 수행했지만 GitHub Issue와 PR을 적극적으로 활용하지 못함 | 기능 단위 Issue 생성, PR 리뷰, 요구사항 traceability 유지 |
 | AI 활용 개발 관리 체계화 | AI 활용으로 생산성은 높아졌지만 규모가 커질수록 구조 관리가 중요해짐 | DDD로 도메인 경계 정리, ADR로 결정 기록, Issue/PR로 작업 단위 관리 |
 
@@ -256,7 +259,7 @@ AI 도구는 코드 작성, 디버깅, 설계 논의, 문서화 속도를 높이
 
 본 시스템은 교육 목적의 의료 영상 AI 프로젝트이며 실제 임상 진단에 사용할 수 없다. 예측 결과와 Grad-CAM은 판독 보조 참고 자료일 뿐이며, 최종 진단은 의료 전문가가 수행해야 한다.
 
-원본 NIH/CheXpert 데이터와 대용량 모델 가중치는 GitHub에 직접 포함하지 않았다. 원본 데이터에는 라이선스와 접근 조건이 존재하며, DICOM 파일에는 PHI가 포함될 수 있으므로 공개 repo에는 비식별 통계와 재현 가능한 코드, 설정, 리포트 중심으로 정리하였다. 모델 파일은 Docker Hub 이미지와 외부 저장소를 통해 재현성을 확보하는 방식으로 구성하였다.
+원본 NIH/CheXpert 데이터와 대용량 모델 가중치는 GitHub에 직접 포함하지 않았다. 원본 데이터에는 라이선스와 접근 조건이 존재하며, DICOM 파일에는 PHI가 포함될 수 있으므로 공개 repo에는 비식별 통계와 재현 가능한 코드, 설정, 리포트 중심으로 정리하였다. 모델 파일은 HuggingFace 모델 저장소와 Docker Hub 이미지를 통해 재현성을 확보하는 방식으로 구성하였다. 정규화 직전 단계까지 전처리된 NIH 데이터셋은 HuggingFace Dataset으로 관리하되, 원본 데이터셋의 관례를 존중하여 공개 다운로드가 아니라 요청 기반 접근으로 운영한다.
 
 또한 External Validation 결과에서 CheXpert 직접 매핑 7개 질환 평균 AUROC가 NIH 대비 0.054 하락하였다. 이는 데이터셋 간 view distribution, 라벨링 방식, 환자군 및 중증도 차이로 인한 domain shift 가능성을 보여준다. 따라서 본 모델은 NIH 기반 과제 환경에서는 요구 성능을 충족하지만, 다른 기관이나 실제 임상 환경에 적용하기 전에는 추가 검증이 필요하다.
 
@@ -265,20 +268,27 @@ AI 도구는 코드 작성, 디버깅, 설계 논의, 문서화 속도를 높이
 | 자료 | 링크 |
 |------|------|
 | 최종 제출 GitHub Repository | https://github.com/MouGam/cxr-cad-final-strait |
-| Docker Hub Image | `mougam/cxr-cad-final` |
-| README | [README.md](../README.md) |
-| 요구사항 문서 | [docs/요구사항.md](요구사항.md) |
-| Dataset Card | [docs/dataset_card.md](dataset_card.md) |
-| 전처리 보고서 | [docs/preprocessing_report.md](preprocessing_report.md) |
-| 모델 학습 보고서 | [docs/report_model_training.md](report_model_training.md) |
-| 성능 평가 보고서 | [docs/report_evaluation.md](report_evaluation.md) |
-| 서빙/MLOps 보고서 | [docs/report_serving.md](report_serving.md) |
-| XAI 및 에러 분석 보고서 | [docs/report_xai_error.md](report_xai_error.md) |
-| 학습 가이드 | [docs/training_guide.md](training_guide.md) |
-| 평가/시각화 산출물 | [outputs/](../outputs/) |
-| 전처리 보고서 이미지 | [report_assets/](../report_assets/) |
-| 테스트 코드 | [tests/](../tests/) |
+| Docker Hub Image | https://hub.docker.com/r/mougam/cxr-cad-final |
+| README | https://github.com/MouGam/cxr-cad-final-strait/blob/main/README.md |
+| 요구사항 문서 | https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/요구사항.md |
+| Dataset Card | https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/dataset_card.md |
+| 전처리 보고서 | https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/preprocessing_report.md |
+| 모델 학습 보고서 | https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/report_model_training.md |
+| 성능 평가 보고서 | https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/report_evaluation.md |
+| 서빙/MLOps 보고서 | https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/report_serving.md |
+| XAI 및 에러 분석 보고서 | https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/report_xai_error.md |
+| 학습 가이드 | https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/training_guide.md |
+| 평가/시각화 산출물 | https://github.com/MouGam/cxr-cad-final-strait/tree/main/outputs |
+| 전처리 보고서 이미지 | https://github.com/MouGam/cxr-cad-final-strait/tree/main/report_assets |
+| 테스트 코드 | https://github.com/MouGam/cxr-cad-final-strait/tree/main/tests |
+| DenseNet-121 학습 완료 가중치 | https://huggingface.co/MouGam/nih-chestxray14-densenet121 |
+| EfficientNet-B0 학습 완료 가중치 | https://huggingface.co/MouGam/nih-chestxray14-efficientnet-B0 |
+| EfficientNet-B4 학습 완료 가중치 | https://huggingface.co/MouGam/nih-chestxray14-efficientnet-B4 |
+| NIH 전처리 완료 데이터셋 | https://huggingface.co/datasets/MouGam/nih-processed-dataset |
+| CheXpert Domain Shift 선별 테스트셋 | https://huggingface.co/datasets/MouGam/chexpert-test-set |
 | 원본 Training/Preprocessing Repo | https://github.com/MouGam/capstone-chest-xray-multilabel |
 | 원본 Serving Showcase Repo | https://github.com/MouGam/capstone-chest-xray-multilabel-showcase |
+
+NIH 전처리 완료 데이터셋은 정규화를 제외하고 전처리 완료한 이미지 데이터셋이다. 원본 데이터셋의 배포 관례를 존중하여 오픈소스 공개 다운로드가 아니라 요청 기반 제공으로 운영하며, 접근 요청은 `hyeok123456789@gmail.com`으로 진행한다.
 
 GitHub Issue와 Pull Request 이력은 요구사항 대비 적극 활용이 부족했던 항목으로, 본 보고서의 향후 개선 사항에 별도 기록하였다.
