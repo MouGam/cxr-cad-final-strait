@@ -281,8 +281,6 @@ AI 도구는 코드 작성, 디버깅, 설계 논의, 문서화 속도를 높이
 | 서빙/MLOps 보고서 | https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/report_serving.md |
 | XAI 및 에러 분석 보고서 | https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/report_xai_error.md |
 | 학습 가이드 | https://github.com/MouGam/cxr-cad-final-strait/blob/main/docs/training_guide.md |
-| 평가/시각화 산출물 | https://github.com/MouGam/cxr-cad-final-strait/tree/main/outputs |
-| 전처리 보고서 이미지 | https://github.com/MouGam/cxr-cad-final-strait/tree/main/report_assets |
 | 테스트 코드 | https://github.com/MouGam/cxr-cad-final-strait/tree/main/tests |
 | DenseNet-121 학습 완료 가중치 | https://huggingface.co/MouGam/nih-chestxray14-densenet121 |
 | EfficientNet-B0 학습 완료 가중치 | https://huggingface.co/MouGam/nih-chestxray14-efficientnet-B0 |
